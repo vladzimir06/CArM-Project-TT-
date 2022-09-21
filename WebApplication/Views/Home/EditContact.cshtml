@@ -1,0 +1,137 @@
+﻿@model Contact
+
+<div class="modal fade" id="createContact">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="createContactLabel">Editing...</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form form asp-action="edit">
+                    <div calss="validation" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <label asp-for="Name">Name</label>
+                        <input type="text" asp-for="Name" class="form-control id="Name" />
+                        <p id="NameErrors"></p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MobilePhone">MobilePhone</label>
+                        <input type="text" asp-for="MobilePhone" class="form-control" placeholder="+375(44)5509168" />
+                        <p id="MobilePhoneErrors"></p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="JobTitle">JobTitle</label>
+                        <input type="text" asp-for="JobTitle" class="form-control" id="JobTitle" />
+                        <p id="JobTitleErrors"></p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BirthDate">BirthDate</label>
+                        <input type="text" asp-for="BirthDate" class="form-control" id="BirthDate" placeholder="13.08.2022" />
+                        <p id="BirthDateErrors"></p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <input type="button" value="Update" class="btn btn-dark" onclick="Validation()" id="Check" />
+                <input type="button" value="Update" class="btn btn-dark" data-save="modal" id="Update" hidden="hidden"/>
+                <input type="button" value="Close" class="btn btn-default" data-dismiss="modal" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Validation()
+    {
+        if (nameValidation() == true && jobTitleValidation() == true && mobilePhoneValidation() == true && dataValidation() == true) {
+            $('#Update').prop('hidden', false);
+            $('#Check').prop('hidden', true);
+        }
+    }
+
+    function nameValidation() {
+        var state = new Boolean(false);
+        var name = document.getElementById("Name").value;
+        var standart = /[^a-zA-Zа-яА-Я]+/;
+        var errorMessage;
+        if (name == "") errorMessage = "Fill this field";
+        else if (standart.test(name)) {
+            errorMessage = "Wrong input";
+        }
+        else
+        {
+            errorMessage = "Greate!";
+            state = true;
+        }
+        document.getElementById("NameErrors").innerHTML = errorMessage;
+        return state;
+    }
+
+    function jobTitleValidation() {
+        var state = new Boolean(false);
+        var jobTitle = document.getElementById("JobTitle").value;
+        var standart = /^[0-9]+$/;
+        var errorMessage;
+        if (jobTitle == "") errorMessage = "Fill this field";
+        else if (standart.test(jobTitle)) {
+            errorMessage = "Wrong input";
+        }
+        else
+        {
+            errorMessage = "Greate!";
+            state = true;
+        }
+        document.getElementById("JobTitleErrors").innerHTML = errorMessage;
+        return state;
+    }
+
+    function mobilePhoneValidation() {
+        var state = new Boolean(false);
+        var mobilePhone = document.getElementById("MobilePhone").value;
+        var standart = /^[\d\+][\d\(\)\ -]{4,15}\d\d$/;
+        var errorMessage;
+        if (mobilePhone == "") errorMessage = "Fill this field";
+        else if (!standart.test(mobilePhone)) {
+            errorMessage = "Wrong input";
+        }
+        else
+        {
+            errorMessage = "Greate!";
+            state = true;
+        }
+        document.getElementById("MobilePhoneErrors").innerHTML = errorMessage;
+        return state;
+    }
+
+    function dataValidation() {
+        var state = new Boolean(false);
+        var birthDate = document.getElementById("BirthDate").value;
+        var arrD = birthDate.split(".");
+        arrD[1] -= 1;
+        var d = new Date(arrD[2], arrD[1], arrD[0]);
+        if (birthDate == "") errorMessage = "Fill this field";
+        else if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0]))
+        {
+            if (d.getFullYear() > 2022 || d.getFullYear() < 1950) {
+                errorMessage = "Wrong input";
+            }
+            else
+            {
+                errorMessage = "Greate!";
+                state = true;
+            }
+        }
+        else
+        {
+            errorMessage = "Wrong input";
+        }
+        document.getElementById("BirthDateErrors").innerHTML = errorMessage;
+        return state;
+    }
+
+</script>

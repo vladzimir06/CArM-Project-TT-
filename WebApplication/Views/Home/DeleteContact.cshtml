@@ -1,0 +1,25 @@
+﻿@model Contact
+
+<div class="modal fade" id="createContact">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="createContactLabel">Removing...</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form form asp-action="delete">
+                    <label>Are you sure?</label>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <input type="button" value="Delete" class="btn btn-dark" data-save="modal" />
+                <input type="button" value="Close" class="btn btn-default" data-dismiss="modal" />
+            </div>
+        </div>
+    </div>
+</div>

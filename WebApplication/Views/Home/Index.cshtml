@@ -1,0 +1,21 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<WebApplication.Models.Contact>
+
+<div id="PlaceHolderHere"></div>
+<button type="button" class="btn btn-dark" data-toggle="ajax-modal" data-target="#createContact" data-url="@Url.Action("Create")">Add contact</button>
+<table class="table">
+    <tr><td>Name</td><td>MobilePhone</td><td>JobTitle</td><td>BirthDate</td><td>Capabilities</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.MobilePhone</td>
+            <td>@item.JobTitle</td>
+            <td>@item.BirthDate</td>
+            <td>
+                <button type="button" class="btn btn-dark" data-toggle="ajax-modal" data-target="#createContact" data-url="@Url.Action($"Edit/{item.Id}")">Edit</button>
+                <button type="button" class="btn btn-dark" data-toggle="ajax-modal" data-target="#createContact" data-url="@Url.Action($"Delete/{item.Id}")">Delete</button>
+            </td>
+        </tr>
+    }
+</table>
