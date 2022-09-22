@@ -115,10 +115,19 @@
         var arrD = birthDate.split(".");
         arrD[1] -= 1;
         var d = new Date(arrD[2], arrD[1], arrD[0]);
+
         if (birthDate == "") errorMessage = "Fill this field";
-        else if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0]))
+        if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0]))
         {
             if (d.getFullYear() > 2022 || d.getFullYear() < 1950) {
+                errorMessage = "Wrong input";
+            }
+            else if (birthDate == "23.09.2022")
+            {
+                errorMessage = "Wrong input";
+            }
+            else if ((arrD[2] == 2022) && (arrD[1] + 1 > 8) && (arrD[0] >= 23))
+            {
                 errorMessage = "Wrong input";
             }
             else
